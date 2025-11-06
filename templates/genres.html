@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Vellum - A Curated Bookstore</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "ivory": "#F5F5DC",
+                        "warm-gray": "#A39E93",
+                        "charcoal": "#36454F",
+                        "burgundy": "#6D2932",
+                        "teal": "#008080",
+                        "text-light": "#36454F",
+                        "text-dark": "#F5F5DC",
+                        "background-light": "#FDFBF5",
+                        "background-dark": "#2C3A47",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#344955",
+                        "accent-light": "#A39E93",
+                        "accent-dark": "#8A9A9D",
+                        "cta-light": "#6D2932",
+                        "cta-dark": "#B27C66"
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Inter", "sans-serif"],
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 25px -5px rgba(0, 0, 0, 0.07), 0 8px 10px -6px rgba(0, 0, 0, 0.07)',
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .font-display {
+            font-family: 'Playfair Display', serif;
+        }
+        .dark .group:hover .book-shadow {
+            box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.3);
+        }
+        .group:hover .book-shadow {
+            box-shadow: 0 20px 45px -10px rgba(109, 41, 50, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-body antialiased">
+<div class="relative flex min-h-screen w-full flex-col">
+<header class="sticky top-0 z-50 w-full border-b border-warm-gray/20 dark:border-charcoal/40 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-lg">
+<div class="container mx-auto flex items-center justify-between whitespace-nowrap px-4 py-4 lg:px-8">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-text-light dark:text-text-dark">
+<span class="material-symbols-outlined text-cta-light dark:text-cta-dark text-3xl">import_contacts</span>
+<h2 class="text-2xl font-bold font-display leading-tight tracking-wide">Vellum</h2>
+</div>
+<nav class="hidden items-center gap-8 md:flex">
+<a class="text-sm font-medium hover:text-cta-light dark:hover:text-cta-dark" href="#">Home</a>
+<a class="text-sm font-medium text-cta-light dark:text-cta-dark border-b-2 border-cta-light dark:border-cta-dark pb-1" href="#">Genres</a>
+<a class="text-sm font-medium hover:text-cta-light dark:hover:text-cta-dark" href="#">New Arrivals</a>
+<a class="text-sm font-medium hover:text-cta-light dark:hover:text-cta-dark" href="#">Bestsellers</a>
+</nav>
+</div>
+<div class="flex items-center justify-end gap-3 lg:gap-4">
+<div class="hidden lg:flex items-center gap-2">
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-warm-gray hover:bg-warm-gray/10 dark:text-accent-dark dark:hover:bg-accent-dark/10">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="flex h-10 w-10 items-center justify-center rounded-full text-warm-gray hover:bg-warm-gray/10 dark:text-accent-dark dark:hover:bg-accent-dark/10">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="relative flex h-10 w-10 items-center justify-center rounded-full text-warm-gray hover:bg-warm-gray/10 dark:text-accent-dark dark:hover:bg-accent-dark/10">
+<span class="material-symbols-outlined">shopping_bag</span>
+<span class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-cta-light dark:bg-cta-dark text-xs font-bold text-white">2</span>
+</button>
+</div>
+<button class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full text-warm-gray hover:bg-warm-gray/10 dark:text-accent-dark dark:hover:bg-accent-dark/10" id="theme-toggle">
+<span class="material-symbols-outlined dark:hidden">dark_mode</span>
+<span class="material-symbols-outlined hidden dark:inline">light_mode</span>
+</button>
+</div>
+</div>
+</header>
+<main class="container mx-auto flex flex-1 flex-col px-4 py-10 lg:flex-row lg:gap-10 lg:px-8">
+<aside class="w-full shrink-0 lg:w-64 xl:w-72">
+<div class="sticky top-24 flex flex-col gap-6">
+<div class="flex items-center justify-between">
+<h2 class="text-xl font-bold font-display">Filters</h2>
+<button class="text-sm text-accent-light dark:text-accent-dark hover:text-cta-light dark:hover:text-cta-dark">Clear All</button>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-base font-medium" for="sort-options">Sort By</label>
+<select class="form-select w-full rounded-md border-warm-gray/30 dark:border-accent-dark/50 bg-background-light dark:bg-surface-dark focus:border-cta-light focus:ring-cta-light/50 dark:focus:border-cta-dark dark:focus:ring-cta-dark/50" id="sort-options">
+<option>Popularity</option>
+<option>Price: Low to High</option>
+<option>Price: High to Low</option>
+<option>Newest</option>
+<option>Title: A-Z</option>
+</select>
+</div>
+<details class="flex flex-col group border-t border-warm-gray/20 dark:border-accent-dark/30 pt-4" open="">
+<summary class="flex cursor-pointer list-none items-center justify-between gap-6">
+<p class="text-base font-medium">Genre</p>
+<span class="material-symbols-outlined transform transition-transform group-open:rotate-180">expand_more</span>
+</summary>
+<div class="flex flex-col gap-2 pt-3 text-sm">
+<label class="flex items-center gap-2 cursor-pointer"><input class="form-checkbox rounded-sm text-cta-light dark:text-cta-dark bg-background-light dark:bg-background-dark border-warm-gray/40 focus:ring-cta-light/50" type="checkbox"/> Fiction</label>
+<label class="flex items-center gap-2 cursor-pointer"><input class="form-checkbox rounded-sm text-cta-light dark:text-cta-dark bg-background-light dark:bg-background-dark border-warm-gray/40 focus:ring-cta-light/50" type="checkbox"/> Non-Fiction</label>
+<label class="flex items-center gap-2 cursor-pointer"><input checked="" class="form-checkbox rounded-sm text-cta-light dark:text-cta-dark bg-background-light dark:bg-background-dark border-warm-gray/40 focus:ring-cta-light/50" type="checkbox"/> Mystery</label>
+<label class="flex items-center gap-2 cursor-pointer"><input class="form-checkbox rounded-sm text-cta-light dark:text-cta-dark bg-background-light dark:bg-background-dark border-warm-gray/40 focus:ring-cta-light/50" type="checkbox"/> Biography</label>
+</div>
+</details>
+<div class="flex w-full flex-col items-start gap-3 border-t border-warm-gray/20 dark:border-accent-dark/30 pt-4">
+<p class="text-base font-medium leading-normal">Price Range</p>
+<div class="w-full pt-2">
+<input class="w-full h-1 bg-warm-gray/20 rounded-lg appearance-none cursor-pointer range-sm dark:bg-accent-dark/30" style="accent-color: var(--tw-prose-links);" type="range"/>
+<div class="flex justify-between text-sm text-accent-light dark:text-accent-dark mt-2">
+<span>$10</span>
+<span>$50</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-2 border-t border-warm-gray/20 dark:border-accent-dark/30 pt-4">
+<p class="text-base font-medium">Special Selections</p>
+<div class="flex flex-col gap-2 pt-2 text-sm">
+<label class="flex items-center gap-2 cursor-pointer"><input class="form-checkbox rounded-sm text-cta-light dark:text-cta-dark bg-background-light dark:bg-background-dark border-warm-gray/40 focus:ring-cta-light/50" type="checkbox"/> New Arrivals</label>
+<label class="flex items-center gap-2 cursor-pointer"><input class="form-checkbox rounded-sm text-cta-light dark:text-cta-dark bg-background-light dark:bg-background-dark border-warm-gray/40 focus:ring-cta-light/50" type="checkbox"/> Bestsellers</label>
+</div>
+</div>
+</div>
+</aside>
+<div class="flex-1 mt-8 lg:mt-0">
+<div class="grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+<div class="group relative flex flex-col">
+<div class="book-shadow relative w-full overflow-hidden rounded-md bg-warm-gray/10 transition-all duration-300 ease-in-out group-hover:-translate-y-2">
+<img class="h-auto w-full object-cover aspect-[2/3]" data-alt="Abstract book cover with geometric shapes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlKvxNHBr5hhWS-moRwnIhwzSQCQ8B7-QX_36cPQHIf-4rE_l4lzEs8UEL2sIfKzbATq538Zyege44aVGzT8L3OnVKtW_iGg8Zp9zdETU_LZKQOHRIdp5pF1mErZEx4WmClVlI93_4n2CYt0Kj4ML_ZM-2knLfygmIClRMV058vx_wIlj6OYi-a3hPCAPaAURa2liaV3e3yU8z-GYFx_iQRipvp0odwjUEogbG4KTk0s9thHdUfdrirIhsug5AXRAPdtMwocphWKH5"/>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-center opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+<button class="w-full bg-cta-light dark:bg-cta-dark py-3 text-sm font-semibold text-white">Add to Cart</button>
+</div>
+</div>
+<div class="mt-4 flex flex-col">
+<h3 class="font-display text-lg font-semibold leading-snug">The Quantum Thief</h3>
+<p class="mt-1 text-sm text-accent-light dark:text-accent-dark">Hannu Rajaniemi</p>
+<div class="mt-2 flex items-center">
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500" style="font-variation-settings: 'FILL' 0;">star_half</span>
+</div>
+<p class="mt-2 text-base font-semibold">$18.99</p>
+</div>
+</div>
+<div class="group relative flex flex-col">
+<div class="book-shadow relative w-full overflow-hidden rounded-md bg-warm-gray/10 transition-all duration-300 ease-in-out group-hover:-translate-y-2">
+<img class="h-auto w-full object-cover aspect-[2/3]" data-alt="Book cover with a vintage illustration of a flower" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAsXCufQEnoiahWpcJKb7mV2_-E4oZMRu-SBxJpxpqMuUaxrUYNbliG64jkKIwXKUeIzVXMdrfUTsuGVdxkUfUEDjod1v4p0mG_XmSkhNQIMqhMHabrdo84vtd1dhmJQwdSDs-qBHVUxE_rKj6ynP4vldVKOmPiteiV8mYkzULDY2olmK0SyOnvIi5IxZBtNmnr1jUP_DoCgkF-jjtYWlaOGIskCJdnGYxSfQ9tJuIj3h3aColj9JGAoSnoKBgMOSbjf9xJ67nNR5v3"/>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-center opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+<button class="w-full bg-cta-light dark:bg-cta-dark py-3 text-sm font-semibold text-white">Add to Cart</button>
+</div>
+</div>
+<div class="mt-4 flex flex-col">
+<h3 class="font-display text-lg font-semibold leading-snug">Ancillary Justice</h3>
+<p class="mt-1 text-sm text-accent-light dark:text-accent-dark">Ann Leckie</p>
+<div class="mt-2 flex items-center">
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+</div>
+<p class="mt-2 text-base font-semibold">$22.50</p>
+</div>
+</div>
+<div class="group relative flex flex-col">
+<div class="book-shadow relative w-full overflow-hidden rounded-md bg-warm-gray/10 transition-all duration-300 ease-in-out group-hover:-translate-y-2">
+<img class="h-auto w-full object-cover aspect-[2/3]" data-alt="Minimalist book cover with a simple line drawing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCg4YZzmsUsTUKjetKMKatcszal8KTJdtPxfaiiDg02Zy1p4iEymZ8q-zCRfmc0qcVEvEGbQnI_7uk9Pxbpdj7A6c0WStep25AZ_zreW4hNqLOJlY8Q6W9zmiN8MbnvnTRUFLmDdrAh88qX6KsFe4g_o23ORnfKITzlQHUjwta-UqqEVH096V7IWK2RnfqaUKDxHFLPizKJRMLITJeF2uZwF45fxIGq_pE16E4kOxcnca4NWvlQVbLtj0JRtNOylVChh7TpJQiQGECC"/>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-center opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+<button class="w-full bg-cta-light dark:bg-cta-dark py-3 text-sm font-semibold text-white">Add to Cart</button>
+</div>
+</div>
+<div class="mt-4 flex flex-col">
+<h3 class="font-display text-lg font-semibold leading-snug">The Fifth Season</h3>
+<p class="mt-1 text-sm text-accent-light dark:text-accent-dark">N. K. Jemisin</p>
+<div class="mt-2 flex items-center">
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-warm-gray/50 dark:text-accent-dark/50" style="font-variation-settings: 'FILL' 0;">star</span>
+</div>
+<p class="mt-2 text-base font-semibold">$17.00</p>
+</div>
+</div>
+<div class="group relative flex flex-col">
+<div class="book-shadow relative w-full overflow-hidden rounded-md bg-warm-gray/10 transition-all duration-300 ease-in-out group-hover:-translate-y-2">
+<img class="h-auto w-full object-cover aspect-[2/3]" data-alt="Book cover featuring a watercolor landscape" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtp5OR3way169tPln05Upvi0Ahx4MZIErVeg-CuiMdi2vZKe3gcRD6FCHS1eIu11j3iQGi2ydWC4pV4CB9w-b34M3Hoo-NMUr3vh8_-j8t_-SSvMy1MKaf4AjpYc1YTMMxM5fqkKytLu-_ln-NU4nQdPc6KpDoDK5LzSYxcUU2vJxoIFiWbvmjFjmomrVZV5iwjlNQExHrcVu70wiKCGQiW3XnOUTmWu1pA9NHrrBV0gjJ-ESLuxFGqJtHyr108CA6vFPBT75t4y8y"/>
+<div class="absolute inset-x-0 bottom-0 flex translate-y-full items-center justify-center opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+<button class="w-full bg-cta-light dark:bg-cta-dark py-3 text-sm font-semibold text-white">Add to Cart</button>
+</div>
+</div>
+<div class="mt-4 flex flex-col">
+<h3 class="font-display text-lg font-semibold leading-snug">Hyperion</h3>
+<p class="mt-1 text-sm text-accent-light dark:text-accent-dark">Dan Simmons</p>
+<div class="mt-2 flex items-center">
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+<span class="material-symbols-outlined text-sm text-yellow-500">star</span>
+</div>
+<p class="mt-2 text-base font-semibold">$25.99</p>
+</div>
+</div>
+</div>
+<div class="mt-16 flex items-center justify-center gap-2">
+<button class="flex h-9 w-9 items-center justify-center rounded-md hover:bg-warm-gray/10 dark:hover:bg-accent-dark/10">
+<span class="material-symbols-outlined">chevron_left</span>
+</button>
+<button class="flex h-9 w-9 items-center justify-center rounded-md bg-warm-gray/20 dark:bg-accent-dark/20 font-semibold">1</button>
+<button class="flex h-9 w-9 items-center justify-center rounded-md hover:bg-warm-gray/10 dark:hover:bg-accent-dark/10">2</button>
+<button class="flex h-9 w-9 items-center justify-center rounded-md hover:bg-warm-gray/10 dark:hover:bg-accent-dark/10">3</button>
+<span class="text-accent-light dark:text-accent-dark">...</span>
+<button class="flex h-9 w-9 items-center justify-center rounded-md hover:bg-warm-gray/10 dark:hover:bg-accent-dark/10">10</button>
+<button class="flex h-9 w-9 items-center justify-center rounded-md hover:bg-warm-gray/10 dark:hover:bg-accent-dark/10">
+<span class="material-symbols-outlined">chevron_right</span>
+</button>
+</div>
+</div>
+</main>
+</div>
+<script>
+        // Simple dark mode toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+    </script>
+
+</body></html>
