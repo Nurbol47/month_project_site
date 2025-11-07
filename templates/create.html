@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block title %}
+<title>Vellum - Add New Book</title>
+{% endblock %}
+
+{% block style %}
+<style>
+    body {
+        font-family: 'Inter', sans-serif;
+    }
+    .font-display {
+        font-family: 'Playfair Display', serif;
+    }
+</style>
+{% endblock %}
+{% block script %}
+<script>
+    tailwind.config = {
+        darkMode: "class",
+        theme: {
+            extend: {
+                colors: {
+                    "ivory": "#F5F5DC",
+                    "warm-gray": "#A39E93",
+                    "charcoal": "#36454F",
+                    "burgundy": "#6D2932",
+                    "teal": "#008080",
+                    "text-light": "#36454F",
+                    "text-dark": "#F5F5DC",
+                    "background-light": "#FDFBF5", // Ivory-based light theme
+                    "background-dark": "#2C3A47", // Charcoal-based dark theme
+                    "surface-light": "#FFFFFF",
+                    "surface-dark": "#344955",
+                    "accent-light": "#A39E93", // Warm Gray
+                    "accent-dark": "#8A9A9D",
+                    "cta-light": "#6D2932", // Burgundy
+                    "cta-dark": "#008080" // Deep Teal
+                },
+                fontFamily: {
+                    "display": ["Playfair Display", "serif"],
+                    "body": ["Inter", "sans-serif"],
+                },
+                boxShadow: {
+                    'soft': '0 10px 25px -5px rgba(0, 0, 0, 0.07), 0 8px 10px -6px rgba(0, 0, 0, 0.07)',
+                    'lifted': '0 20px 45px -10px rgba(109, 41, 50, 0.25)',
+                },
+                darkBoxShadow: {
+                     'lifted': '0 20px 45px -10px rgba(0, 0, 0, 0.35)',
+                }
+            },
+        },
+    }
+</script>
+{% endblock %}
+{% block body %}
+<div class="relative flex min-h-screen w-full flex-col">
+
+    <main class="flex-1 py-16">
+    <div class="container mx-auto max-w-2xl px-4 lg:px-8">
+        <h1 class="font-display text-4xl md:text-5xl font-bold text-center mb-10 text-charcoal dark:text-ivory">
+            Add a New Book
+        </h1>
+
+        <form action="/create" method="POST" enctype="multipart/form-data" class="space-y-8">
+
+            <div class="bg-surface-light dark:bg-surface-dark p-8 rounded-lg shadow-soft space-y-8">
+
+                <div class="grid grid-cols-1 gap-y-8 gap-x-6 sm:grid-cols-2">
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm font-medium leading-6" for="book-title">Title</label>
+                        <div class="mt-2">
+                            <input class="block w-full rounded-md border-0 py-2.5 bg-background-light dark:bg-background-dark ring-1 ring-inset ring-warm-gray/30 dark:ring-charcoal/50 focus:ring-2 focus:ring-inset focus:ring-cta-light dark:focus:ring-cta-dark"
+                                   id="title" name="title" type="text" required/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium leading-6" for="book-author">Author</label>
+                        <div class="mt-2">
+                            <input class="block w-full rounded-md border-0 py-2.5 bg-background-light dark:bg-background-dark ring-1 ring-inset ring-warm-gray/30 dark:ring-charcoal/50 focus:ring-2 focus:ring-inset focus:ring-cta-light dark:focus:ring-cta-dark"
+                                   id="author" name="author" type="text" required/>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium leading-6" for="price">Price</label>
+                        <div class="relative mt-2 rounded-md">
+                            <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                <span class="text-accent-light dark:text-accent-dark sm:text-sm">$</span>
+                            </div>
+                            <input class="block w-full rounded-md border-0 py-2.5 pl-7 bg-background-light dark:bg-background-dark ring-1 ring-inset ring-warm-gray/30 dark:ring-charcoal/50 focus:ring-2 focus:ring-inset focus:ring-cta-light dark:focus:ring-cta-dark"
+                                   id="price" name="price" placeholder="0" type="number" step="0.01" required/>
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label class="block text-sm font-medium leading-6" for="book-description">Description</label>
+                        <div class="mt-2">
+                            <textarea
+                                    class="block w-full rounded-md border-0 py-2.5 bg-background-light dark:bg-background-dark ring-1 ring-inset ring-warm-gray/30 dark:ring-charcoal/50 focus:ring-2 focus:ring-inset focus:ring-cta-light dark:focus:ring-cta-dark"
+                                    id="text" name="text" rows="5"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium leading-6 mb-2">Book Cover</label>
+                    <div class="flex justify-center rounded-lg border border-dashed border-warm-gray/40 dark:border-charcoal/60 px-6 py-10">
+                        <div class="text-center">
+                            <span class="material-symbols-outlined text-5xl text-accent-light dark:text-accent-dark mx-auto">photo_camera</span>
+                            <div class="mt-4 flex text-sm leading-6 text-accent-light dark:text-accent-dark">
+                                <label class="relative cursor-pointer rounded-md font-semibold text-cta-light dark:text-cta-dark focus-within:outline-none">
+                                    <span>Upload a file</span>
+                                    <input class="sr-only" id="cover-upload" name="cover" type="file" accept="image/*"/>
+                                </label>
+                                <p class="pl-1">or drag and drop</p>
+                            </div>
+                            <p class="text-xs leading-5 text-accent-light/80 dark:text-accent-dark/80">PNG, JPG up to 10MB</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-6 flex items-center justify-end">
+                <button
+                        class="rounded-md bg-cta-light dark:bg-cta-dark px-8 py-3 text-sm font-semibold text-white shadow-sm hover:bg-opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cta-light dark:focus-visible:outline-cta-dark"
+                        type="submit">
+                    Save Book
+                </button>
+            </div>
+
+        </form>
+    </div>
+</main>
+
+<script>
+    const themeToggle = document.getElementById('theme-toggle');
+    themeToggle.addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+    });
+</script>
+
+{% endblock %}
+

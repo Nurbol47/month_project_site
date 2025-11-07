@@ -1,10 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    {% block title %}{% endblock %}
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400..900&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap"
+          rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    {% block style %} {% endblock %}
+    {% block script %} {% endblock %}
 </head>
-<body>
-
+<body class="bg-background-light dark:bg-background-dark text-text-light dark:text-text-dark font-body antialiased">
+    <header class="sticky top-0 z-50 w-full border-b border-warm-gray/20 dark:border-charcoal/40 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-lg">
+        <div class="container mx-auto flex items-center justify-between px-4 py-4 lg:px-8">
+            <div class="flex items-center gap-8">
+                <div class="flex items-center gap-3 text-text-light dark:text-text-dark">
+                    <span class="material-symbols-outlined text-cta-light dark:text-cta-dark text-3xl">import_contacts</span>
+                    <h1 class="text-2xl font-bold font-display leading-tight tracking-wide">Vellum</h1>
+                </div>
+                <nav class="hidden items-center gap-8 md:flex">
+                    <a class="text-sm font-medium hover:text-cta-light dark:hover:text-cta-dark"
+                       href="/home">Home</a>
+                    <a class="text-sm font-medium hover:text-cta-light dark:hover:text-cta-dark" href="/genres">Genres</a>
+                    <a class="text-sm font-medium hover:text-cta-light dark:hover:text-cta-dark" href="/create">Add book</a>
+                </nav>
+            </div>
+            <div class="flex items-center justify-end gap-3 lg:gap-4">
+                <div class="flex items-center gap-2">
+                    <button class="flex h-10 w-10 items-center justify-center rounded-full text-warm-gray hover:bg-warm-gray/10 dark:text-accent-dark dark:hover:bg-accent-dark/10">
+                        <span class="material-symbols-outlined">search</span>
+                    </button>
+                    <button class="flex h-10 w-10 items-center justify-center rounded-full text-warm-gray hover:bg-warm-gray/10 dark:text-accent-dark dark:hover:bg-accent-dark/10">
+                        <span class="material-symbols-outlined">person</span>
+                    </button>
+                    <button class="relative flex h-10 w-10 items-center justify-center rounded-full text-warm-gray hover:bg-warm-gray/10 dark:text-accent-dark dark:hover:bg-accent-dark/10">
+                        <span class="material-symbols-outlined">shopping_bag</span>
+                        <span class="absolute top-1.5 right-1.5 flex h-4 w-4 items-center justify-center rounded-full bg-cta-light dark:bg-cta-dark text-xs font-bold text-white">3</span>
+                    </button>
+                </div>
+                <button class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full text-warm-gray hover:bg-warm-gray/10 dark:text-accent-dark dark:hover:bg-accent-dark/10"
+                        id="theme-toggle">
+                    <span class="material-symbols-outlined dark:hidden">dark_mode</span>
+                    <span class="material-symbols-outlined hidden dark:inline">light_mode</span>
+                </button>
+            </div>
+        </div>
+    </header>
+    {% block body %}{% endblock %}
 </body>
 </html>
